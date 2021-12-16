@@ -20,7 +20,7 @@ beforeEach(() => {
 
   // setup request intercepts
 
-  cy.intercept("GET", "http://localhost:3000/api/startups?*", (req) => {
+  cy.intercept("GET", "http://localhost:3000/api/startups", (req) => {
     req.reply({
       statusCode: 200, // default
       fixture: "startups.json",
@@ -40,6 +40,7 @@ beforeEach(() => {
       body: {},
     });
   }).as("updateStartup");
+
   cy.intercept(
     "PUT",
     `http://localhost:3000/api/objectives?projectId=1`,
