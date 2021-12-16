@@ -1,7 +1,7 @@
 import {ReactElement, useEffect, useState} from "react";
 import {StartupHttpService} from "../../Http/Startup/Startup.http.service";
 import {Startup} from "../../Types/Startup";
-import {Card, Typography} from "@mui/material";
+import {Card, Grid, Typography} from "@mui/material";
 
 export default function StartupList(): ReactElement {
   const [startups, setStartups] = useState<Startup[]>([])
@@ -17,21 +17,23 @@ export default function StartupList(): ReactElement {
 
   if (error) return <>error</>
 
-  return <>
+  return <Grid id="startup-list" container spacing={2} alignItems={'stretch'}>
     {startups.map(startup => (
-      <Card key={startup.id} sx={{margin: 2, padding: 2}}>
-        <Typography variant={'h5'}>{startup.name}</Typography>
-        <Typography variant={'subtitle1'} color="text.secondary">
-          <span>Founded: {startup.dateFounded.getFullYear()}</span>
-          &nbsp;|&nbsp;
-          <span>{startup.employees} Employees</span>
-          &nbsp;|&nbsp;
-          <span>{startup.totalFunding} $</span>
-          &nbsp;|&nbsp;
-          <span>{startup.currentInvestmentStage}</span>
-        </Typography>
-        <Typography variant={'body1'} sx={{marginY: 2}}>{startup.shortDescription}</Typography>
-      </Card>
+        <Grid item xs={4}>
+          <Card key={startup.id} sx={{padding: 2}}>
+            <Typography variant={'h5'}>{startup.name}</Typography>
+            <Typography variant={'subtitle1'} color="text.secondary">
+              <span>Founded: {startup.dateFounded.getFullYear()}</span>
+              &nbsp;|&nbsp;
+              <span>{startup.employees} Employees</span>
+              &nbsp;|&nbsp;
+              <span>$ {startup.totalFunding} Mio.</span>
+              &nbsp;|&nbsp;
+              <span>{startup.currentInvestmentStage}</span>
+            </Typography>
+            <Typography variant={'body1'} sx={{marginY: 2}}>{startup.shortDescription}</Typography>
+          </Card>
+        </Grid>
       ))}
-  </>;
+  </Grid>;
 }
